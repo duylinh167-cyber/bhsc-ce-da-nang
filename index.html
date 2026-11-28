@@ -1179,47 +1179,6 @@ table.vttbl td.rk{font-weight:900;color:#0B2E63}
   });
 })();
 </script>
-<style id="dn-gon">
-/* 25/11/2026 anh Thu: phần đầu trang Đà Nẵng GỌN LẠI để phần nội dung bên dưới rộng, dễ xem.
-   Máy tính (≥1025px): thanh đầu 1 hàng (logo · tiêu đề + kỳ báo cáo · nút) · bộ lọc gọn, KHÔNG dính khi cuộn
-   (cuộn xuống thì chỉ còn thanh đầu + thanh tab) · nút "Bộ lọc" để thu/mở bộ lọc. Màn hẹp giữ nguyên như cũ. */
-@media (min-width:1025px){
-  html body .appbar-in{flex-wrap:nowrap!important;padding:6px 16px!important;gap:12px!important;min-height:0!important;row-gap:0!important}
-  html body .brandmark img{height:30px!important}
-  html body .brandmark{gap:10px!important}
-  html body .htxt{flex:1 1 auto!important;min-width:0!important}
-  html body .htxt h1{font-size:17px!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
-  html body .htxt p{font-size:11px!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
-  html body .htxt p .dnky{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#0B3D91;background:#E6F1FC;border:1px solid #CFE3F7;border-radius:6px;padding:0 8px;margin-right:8px}
-  html body .htxt p .dnky i{font-style:normal;font-size:9.5px;font-weight:800;letter-spacing:.6px;color:#5B7A99}
-  html body .htxt p .dnky b{font-weight:800;color:#0B5CAD}
-  html body .htxt p .dnky s{text-decoration:none;color:#9DB4CC}
-  html body .period{display:none!important}
-  html body .hspace{display:none!important}
-  html body .hacts{flex:none!important;flex-basis:auto!important;width:auto!important;flex-wrap:nowrap!important;gap:5px!important}
-  html body .hacts .hbtn{padding:5px 9px!important;font-size:12px!important}
-  html body .hacts .hbtn .lg{display:none!important}
-  html body .hacts .hbtn .sm{display:inline!important}
-  html body .fbtn{display:inline-flex!important}
-  html body .filterbar{position:static!important;padding:6px 16px!important;gap:6px 14px!important;row-gap:6px!important}
-  html body .filterbar .fgrp>label{font-size:10px!important;flex-basis:auto!important}
-  html body .filterbar .mpick{display:contents!important}
-  html body .filterbar .mpick>label>span{display:none!important}
-  html body .filterbar>.fgrp:first-child{order:1}
-  html body .filterbar .mpick>label{order:2}
-  html body .filterbar .mstrip{order:3}
-  html body .filterbar .msum{order:4}
-  html body .filterbar .mpre{order:6;flex:0 1 auto!important;max-width:none!important}
-  html body .filterbar .fgrp:has(.scopefix){order:7}
-  html body .filterbar .fspace{order:8}
-  html body .filterbar .storechips{display:none!important}
-  html body .tabbar a,html body .tabbar button{padding-top:8px!important;padding-bottom:8px!important}
-}
-@media (min-width:1025px) and (max-width:1380px){
-  html body .htxt h1{font-size:15px!important}
-  html body .hacts .hbtn{padding:4px 7px!important;font-size:11.5px!important}
-}
-</style>
 </head>
 <body>
 <div id="loading"><div class="spin"></div><div style="font-size:12px;font-weight:700;color:#3D4C63">Đang khởi tạo bảng điều hành…</div></div>
@@ -10894,34 +10853,6 @@ $("#bPpt").addEventListener("click",()=>{ ST.tab=7; render(); exportDeck(); });
   })();
 })();
 
-</script>
-<script id="dn-gon-js">
-/* kỳ báo cáo đưa lên dòng phụ đề (ô "Kỳ báo cáo" bị ẩn cho gọn) — luôn khớp ô gốc */
-(function () {
-  function dongBo() {
-    var p = document.getElementById('hSub'), a = document.getElementById('hPeriod'), b = document.getElementById('hPeriodSub');
-    if (!p || !a) return;
-    var s = p.querySelector('.dnky');
-    if (!s) { s = document.createElement('span'); s.className = 'dnky'; p.insertBefore(s, p.firstChild); }
-    var ky = (a.textContent || '').trim(), sub = ((b ? b.textContent : '') || '').split(' · ')[0].trim();
-    var key = ky + '|' + sub;
-    if (s.getAttribute('data-k') === key) return;
-    s.setAttribute('data-k', key);
-    s.innerHTML = '<i>KỲ BÁO CÁO</i><s>›</s><b></b>' + (sub && sub !== ky ? '<s>›</s><span></span>' : '');
-    s.querySelector('b').textContent = ky;
-    if (s.querySelector('span')) s.querySelector('span').textContent = sub;
-  }
-  function batDau() {
-    dongBo();
-    var a = document.getElementById('hPeriod'), b = document.getElementById('hPeriodSub');
-    var ob = new MutationObserver(dongBo);
-    [a, b].forEach(function (e) { if (e) ob.observe(e, { childList: true, characterData: true, subtree: true }); });
-    try { if (typeof syncStickyOffsets === 'function') syncStickyOffsets(); } catch (_) { }
-    window.addEventListener('resize', function () { try { syncStickyOffsets(); } catch (_) { } });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', batDau); else batDau();
-  window.addEventListener('load', function () { setTimeout(function () { dongBo(); try { syncStickyOffsets(); } catch (_) { } }, 300); });
-})();
 </script>
 </body>
 </html>
